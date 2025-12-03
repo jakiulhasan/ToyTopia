@@ -1,4 +1,4 @@
-import React, { use, useEffect, useRef, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { Link, NavLink } from "react-router";
 import { AuthContext } from "../context/AuthContext";
 import { RxAvatar } from "react-icons/rx";
@@ -7,27 +7,15 @@ import { toast } from "react-toastify";
 import logo from "../assets/logo.png";
 
 const Navbar = () => {
-  const { user, signOutUser, loading } = use(AuthContext);
+  const { ref, filteredToys, setFilteredToys, user, signOutUser, loading } =
+    use(AuthContext);
   const [toys, setToys] = useState([]);
   const [searchText, setSearchText] = useState("");
-  const [filteredToys, setFilteredToys] = useState([]);
-  const dropdownRef = useRef(null);
 
   useEffect(() => {
     fetch("/toysDetails.json").then((res) =>
       res.json().then((data) => setToys(data))
     );
-  }, []);
-
-  useEffect(() => {
-    function handleClickOutside(e) {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-        setFilteredToys([]); // hide dropdown
-      }
-    }
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   const handleSearch = (e) => {
@@ -142,7 +130,7 @@ const Navbar = () => {
 
           {filteredToys.length > 0 && (
             <div
-              ref={dropdownRef}
+              ref={ref}
               className="absolute top-12 bg-white w-80 p-3 rounded shadow-lg max-h-60 overflow-y-auto z-50"
             >
               {filteredToys.map((toy) => (
