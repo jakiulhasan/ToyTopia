@@ -1,4 +1,4 @@
-import React, { use } from "react";
+import React, { use, useEffect, useRef, useState } from "react";
 import { Link, NavLink } from "react-router";
 import { AuthContext } from "../context/AuthContext";
 import { RxAvatar } from "react-icons/rx";
@@ -8,6 +8,45 @@ import logo from "../assets/logo.png";
 
 const Navbar = () => {
   const { user, signOutUser, loading } = use(AuthContext);
+  const [toys, setToys] = useState([]);
+  const [searchText, setSearchText] = useState("");
+  const [filteredToys, setFilteredToys] = useState([]);
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    fetch("/toysDetails.json").then((res) =>
+      res.json().then((data) => setToys(data))
+    );
+  }, []);
+
+  useEffect(() => {
+    function handleClickOutside(e) {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setFilteredToys([]); // hide dropdown
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const handleSearch = (e) => {
+    const text = e.target.value;
+    setSearchText(text);
+
+    if (text.trim().length === 0) {
+      setFilteredToys([]);
+      return;
+    }
+
+    const matches = toys.filter((toy) =>
+      toy.toyName.toLowerCase().includes(text.toLowerCase())
+    );
+
+    setFilteredToys(matches);
+  };
+
+  console.log(toys);
 
   if (loading) {
     return <Loading></Loading>;
@@ -30,7 +69,6 @@ const Navbar = () => {
     <NavLink to="/about">About Us</NavLink>,
     <NavLink to="/contacts">Contacts</NavLink>,
     <NavLink to="/support">Support</NavLink>,
-    user && <NavLink to="/user-profile">User Profile</NavLink>,
   ];
   return (
     <div className="navbar bg-primary backdrop-blur-md shadow-sm sticky top-0 z-50">
@@ -74,7 +112,8 @@ const Navbar = () => {
             ))}
           </ul>
         </div>
-        <div className="navbar-center hidden lg:flex">
+        {/* Search Bar */}
+        <div className="navbar-center hidden lg:flex relative">
           <label className="input">
             <svg
               className="h-[1em] opacity-50"
@@ -92,9 +131,52 @@ const Navbar = () => {
                 <path d="m21 21-4.3-4.3"></path>
               </g>
             </svg>
-            <input type="search" required placeholder="Search" />
+
+            <input
+              type="search"
+              placeholder="Search toys..."
+              value={searchText}
+              onChange={handleSearch}
+            />
           </label>
+
+          {filteredToys.length > 0 && (
+            <div
+              ref={dropdownRef}
+              className="absolute top-12 bg-white w-80 p-3 rounded shadow-lg max-h-60 overflow-y-auto z-50"
+            >
+              {filteredToys.map((toy) => (
+                <Link
+                  key={toy.toyId}
+                  to={`/toys/${toy.toyId}`}
+                  className="block p-2 hover:scale-105 transition-transform "
+                >
+                  <div className="flex items-center bg-base-200 shadow-sm p-2 rounded-sm">
+                    <img
+                      src={toy.pictureURL}
+                      alt={toy.toyName}
+                      className="w-12 h-12 rounded-sm inline-block mr-2 object-cover"
+                    />
+                    <div>
+                      <h1 className="font-bold truncate max-w-[180px]">
+                        {toy.toyName}
+                      </h1>
+                      <div className="flex gap-2">
+                        <p className="text-sm text-gray-600">
+                          Price: ${toy.price}
+                        </p>
+                        <p className="text-sm text-gray-600">
+                          Ratings: {toy.rating}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
         </div>
+
         <div className="navbar-end">
           {user ? (
             <div className="dropdown z-10 dropdown-hover dropdown-end">
@@ -132,6 +214,13 @@ const Navbar = () => {
                     </div>
                   </Link>
                 </li>
+                <li>
+                  <Link>
+                    <button className="" onClick={signOut}>
+                      <a>Log Out</a>
+                    </button>
+                  </Link>
+                </li>
               </ul>
             </div>
           ) : (
@@ -141,11 +230,6 @@ const Navbar = () => {
             >
               Login
             </Link>
-          )}
-          {user && (
-            <button className="btn" onClick={signOut}>
-              <a>Log Out</a>
-            </button>
           )}
         </div>
       </div>

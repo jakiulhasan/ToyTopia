@@ -19,6 +19,7 @@ const HomeLayout = () => {
       </Helmet>
       <Navbar></Navbar>
       <Outlet></Outlet>
+
       <Footer></Footer>
       <ToastContainer />
     </div>
