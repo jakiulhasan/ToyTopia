@@ -2,7 +2,22 @@
 @plugin "daisyui" {
   themes: light --default;
 }
+@plugin "daisyui/theme" {
+  name: "light";
+  default: true;
+
+  --color-primary: #081621; /* dark blue */
+  --color-secondary: #ffd93d; /* bright yellow */
+  --color-accent: #6bcb77; /* soft green */
+  --color-neutral: #fbd2a4; /* dark neutral for text */
+  --color-base-100: #ffffff; /* background white */
+  --color-info: #5bc0eb; /* sky blue */
+  --color-success: #9bc53d; /* lime green */
+  --color-warning: #f5b700; /* warm yellow */
+  --color-error: #e4572e; /* bright orange-red */
+  --color-text: #fbd2a4;
+}
 
 a.active {
-  @apply font-bold text-blue-600;
+  @apply font-bold text-secondary;
 }

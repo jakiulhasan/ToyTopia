@@ -32,15 +32,12 @@ const router = createBrowserRouter([
       },
       {
         path: "/contacts",
-        element: (
-          <PrivateRoute>
-            <Contacts></Contacts>
-          </PrivateRoute>
-        ),
+        element: <Contacts></Contacts>,
       },
       { path: "/privacy-policy", Component: PrivacyPolicy },
       { path: "/term-and-conditions", Component: TermsAndConditions },
       { path: "/about", Component: About },
+      { path: "/support", Component: About },
       { path: "/forgot-password", Component: ForgetPassword },
       {
         path: "/login",
