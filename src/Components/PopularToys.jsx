@@ -1,33 +1,47 @@
 import React from "react";
-import { IoMdStar } from "react-icons/io";
 import { Link } from "react-router";
-import Marquee from "react-fast-marquee";
+import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
 import ToysCard from "./ToysCard";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/scrollbar";
 
 const PopularToys = ({ popularToys }) => {
-  console.log(popularToys);
   return (
-    <div className="">
-      <Marquee className="bg-secondary p-4 font-bold text-white">
-        <div className=" flex gap-48">
-          <span>UpComing Events</span>
-          <span>UpComing Events</span>
-          <span>UpComing Events</span>
-          <span>UpComing Events</span>
-        </div>
-      </Marquee>
-      <h2 className="text-center mt-2 ">Trending Now</h2>
-      <h1 className="text-center text-2xl font-bold">
-        <span className="text-secondary">Best Selling</span> Products
+    <div className="mt-10 max-w-7xl mx-auto">
+      <h1 className="text-2xl font-bold border-b-2 border-base-300 mb-10">
+        <span className="text-primary border-b-2 border-secondary">
+          Best Selling
+        </span>{" "}
+        Products
       </h1>
-      <div className="w-11/12 mx-auto grid md:grid-cols-3 gap-5 mt-5">
+
+      <Swiper
+        modules={[Navigation, Pagination, Scrollbar, A11y]}
+        spaceBetween={20}
+        navigation
+        pagination={{ clickable: true }}
+        breakpoints={{
+          320: { slidesPerView: 1 },
+          480: { slidesPerView: 2 },
+          768: { slidesPerView: 3 },
+          1024: { slidesPerView: 4 },
+        }}
+        className="pb-10" // extra space for pagination
+      >
         {popularToys.map((popularToy) => (
-          <ToysCard popularToy={popularToy}></ToysCard>
+          <SwiperSlide key={popularToy._id} className="mb-10">
+            {/* margin bottom so pagination doesn't overlap */}
+            <ToysCard popularToy={popularToy} />
+          </SwiperSlide>
         ))}
-      </div>
+      </Swiper>
+
       <Link
         to="/all-toys"
-        className="btn btn-secondary mx-auto flex justify-center w-fit my-10"
+        className="btn btn-primary mx-auto flex justify-center w-fit my-5"
       >
         View All Toys
       </Link>

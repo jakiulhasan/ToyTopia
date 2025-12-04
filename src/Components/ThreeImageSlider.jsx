@@ -8,33 +8,34 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
-
 const ThreeImageSlider = () => {
   return (
-    <div className="w-11/12 mx-auto mt-3">
+    <div className="max-w-7xl mx-auto">
       <Swiper
         modules={[Navigation, Pagination, Scrollbar, A11y]}
-        spaceBetween={50}
+        spaceBetween={0}
         slidesPerView={1}
         navigation
         pagination={{ clickable: true }}
         onSwiper={(swiper) => console.log(swiper)}
         onSlideChange={() => console.log("slide change")}
-        className="h-[500px]"
+        className=""
       >
+        {" "}
         <SwiperSlide>
-          <img className="h-full mx-auto" src={slider1} alt="" />
-        </SwiperSlide>
+          {" "}
+          <img className="w-full mx-auto" src={slider1} alt="" />{" "}
+        </SwiperSlide>{" "}
         <SwiperSlide>
-          <img className="h-full mx-auto" src={slider2} alt="" />
-        </SwiperSlide>
+          {" "}
+          <img className="w-full mx-auto" src={slider2} alt="" />{" "}
+        </SwiperSlide>{" "}
         <SwiperSlide>
-          <img className="h-full mx-auto" src={slider3} alt="" />
-        </SwiperSlide>
-        ...
+          {" "}
+          <img className="w-full mx-auto" src={slider3} alt="" />{" "}
+        </SwiperSlide>{" "}
       </Swiper>
     </div>
   );
 };
-
 export default ThreeImageSlider;

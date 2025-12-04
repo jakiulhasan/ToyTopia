@@ -9,41 +9,37 @@ const ToysCard = ({ popularToy }) => {
         <figure>
           <img
             src={popularToy.pictureURL}
-            className="w-full h-[200px] object-cover"
+            className="w-full h-[200px] "
             alt={popularToy.toyName}
           />
         </figure>
         <div className="card-body">
-          <h2 className="card-title">
+          <h2 className="card-title flex justify-between font-bold">
             {popularToy.toyName}
-            <div className="badge badge-secondary">
-              {popularToy.rating >= 4.8 ? (
-                <span>Popular Toy </span>
-              ) : (
-                <span>Trending Toy</span>
-              )}
-            </div>
           </h2>
           <p className="flex-1">{popularToy.description}</p>
           <div className="flex justify-between">
             <p className="flex items-center gap-2">
-              <IoMdStar className="text-2xl text-red-500" />
-              {popularToy.rating}
-            </p>
-            <p className="justify-end flex gap-2">
-              {" "}
-              Available :{" "}
-              <span className="text-green-500 font-bold">
-                {popularToy.availableQuantity}
-              </span>
+              <div className="flex">
+                <IoMdStar className="text-2xl text-red-500" />
+                <IoMdStar className="text-2xl text-red-500" />
+                <IoMdStar className="text-2xl text-red-500" />
+                <IoMdStar className="text-2xl text-red-500" />
+                <IoMdStar className="text-2xl text-red-500" />
+              </div>
+              <span className="font-text-xl">{popularToy.rating}</span>
             </p>
           </div>
-          <div className="flex items-center justify-between">
+          <div className="flex gap-5 items-center">
+            <h3 className="line-through">
+              {(popularToy.price * 30) / 100 + popularToy.price}
+            </h3>
             <h2 className="text-xl font-bold">${popularToy.price}</h2>
-            <Link to={`/toys/${popularToy.toyId}`} className="btn">
-              View Details
-            </Link>
           </div>
+
+          <Link to={`/toys/${popularToy.toyId}`} className="btn btn-primary">
+            View Details
+          </Link>
         </div>
       </div>
     </div>

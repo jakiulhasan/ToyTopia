@@ -12,7 +12,7 @@ const StayUpToDate = () => {
   };
 
   return (
-    <div className="bg-blue-50 py-12 px-6 text-center rounded-2xl shadow-inner mt-12 w-11/12 mx-auto">
+    <div className="bg-blue-50 py-12 px-6 text-center rounded-2xl shadow-inner mt-12 max-w-7xl mx-auto">
       <h2 className="text-3xl font-bold text-blue-700 mb-3">
         Stay Up to Date!
       </h2>

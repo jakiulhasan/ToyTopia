@@ -5,6 +5,7 @@ import Loading from "../Components/Loading";
 import PopularToys from "../Components/PopularToys";
 import Welcome from "../Components/Welcome";
 import StayUpToDate from "../Components/StayUpToDate";
+import AboutSection from "../Components/AboutSection";
 
 const Homepages = () => {
   const toysData = useLoaderData();
@@ -20,8 +21,9 @@ const Homepages = () => {
   return (
     <div>
       <ThreeImageSlider></ThreeImageSlider>
-      <Welcome></Welcome>
       <PopularToys popularToys={popularToys}></PopularToys>
+      <Welcome></Welcome>
+      <AboutSection></AboutSection>
       <StayUpToDate></StayUpToDate>
     </div>
   );
