@@ -37,11 +37,9 @@ const Register = () => {
     googleSignIn()
       .then((result) => {
         const loggedUser = result.user;
-        console.log(loggedUser);
         toast.success("Google Sign-In Successful");
       })
       .catch((error) => {
-        console.log("error:", error.message);
         toast.error(error.message);
       });
   };
@@ -57,7 +55,6 @@ const Register = () => {
     createAccount(email, password)
       .then((result) => {
         const loggedUser = result.user;
-        console.log(loggedUser);
         const profile = { displayName: name, photoURL: image };
         updateUserProfile(profile)
           .then(() => {

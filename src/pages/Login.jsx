@@ -21,12 +21,10 @@ const Login = () => {
     googleSignIn()
       .then((result) => {
         const loggedUser = result.user;
-        console.log(loggedUser);
         toast.success("Google Sign-In Successful");
         navigate(`${location.state ? location.state : "/"}`);
       })
       .catch((error) => {
-        console.log("error:", error.message);
         toast.error(error.message);
       });
   };
@@ -40,13 +38,11 @@ const Login = () => {
     userSignIn(email, password)
       .then((result) => {
         const loggedUser = result.user;
-        console.log(loggedUser);
         toast.success("Login Successful");
         form.reset();
         navigate(`${location.state ? location.state : "/"}`);
       })
       .catch((error) => {
-        console.log("error:", error.message);
         toast.error(error.message);
       });
   };

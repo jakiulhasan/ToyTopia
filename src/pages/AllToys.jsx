@@ -1,11 +1,27 @@
-import React, { useState } from "react";
-import { useLoaderData, Link } from "react-router";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router";
 import ToysCard from "../Components/ToysCard";
 import { Helmet } from "react-helmet-async";
 import { BsGrid, BsGrid3X3Gap } from "react-icons/bs";
+import api from "../axios/api";
+import Loading from "../Components/Loading";
 
 const AllToys = () => {
-  const toysData = useLoaderData();
+  const [toysData, setToysData] = useState([]);
+  const [loading, setLoading] = useState([true]);
+
+  useEffect(() => {
+    const loadToys = async () => {
+      try {
+        const response = await api.get("/toys");
+        setToysData(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    loadToys();
+  }, []);
 
   const [sortBy, setSortBy] = useState("");
   const [itemsToShow, setItemsToShow] = useState(24);
@@ -83,11 +99,15 @@ const AllToys = () => {
       </div>
 
       {/* TOYS GRID */}
-      <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 my-10 p-4 sm:p-0">
-        {processedToys.map((toy) => (
-          <ToysCard key={toy.toyId} popularToy={toy} />
-        ))}
-      </div>
+      {loading ? (
+        <Loading></Loading>
+      ) : (
+        <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 my-10 p-4 sm:p-0">
+          {processedToys.map((toy) => (
+            <ToysCard key={toy.toyId} popularToy={toy} />
+          ))}
+        </div>
+      )}
     </>
   );
 };

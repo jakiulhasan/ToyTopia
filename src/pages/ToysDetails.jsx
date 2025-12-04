@@ -7,6 +7,7 @@ const ToysDetails = () => {
   const { id } = useParams();
   const toysData = useLoaderData();
 
+
   const [toy, setToy] = useState({});
 
   useEffect(() => {
@@ -14,7 +15,6 @@ const ToysDetails = () => {
     setToy(toyData);
   }, [id, toysData]);
 
-  console.log(toy);
   return (
     <div>
       <Helmet>

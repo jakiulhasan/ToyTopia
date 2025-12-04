@@ -21,7 +21,6 @@ const UserProfile = () => {
         document.getElementById("my_modal_2").close();
       })
       .catch((error) => {
-        console.error("Error updating profile:", error);
         toast.error("Failed to update profile");
       });
   };

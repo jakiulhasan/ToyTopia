@@ -5,6 +5,7 @@ import { RxAvatar } from "react-icons/rx";
 import Loading from "./Loading";
 import { toast } from "react-toastify";
 import logo from "../assets/logo.png";
+import api from "../axios/api";
 
 const Navbar = () => {
   const { user, signOutUser, loading } = use(AuthContext);
@@ -14,9 +15,15 @@ const Navbar = () => {
   const dropdownRef = useRef(null);
 
   useEffect(() => {
-    fetch("/toysDetails.json").then((res) =>
-      res.json().then((data) => setToys(data))
-    );
+    const loadToys = async () => {
+      try {
+        const response = await api.get("/toys");
+        setToys(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    loadToys();
   }, []);
 
   useEffect(() => {
@@ -46,14 +53,11 @@ const Navbar = () => {
     setFilteredToys(matches);
   };
 
-  console.log(toys);
-
   if (loading) {
     return <Loading></Loading>;
   }
 
   const signOut = () => {
-    console.log("clicked sign out");
     signOutUser()
       .then(() => {
         toast.success("Log Out Successfully");
