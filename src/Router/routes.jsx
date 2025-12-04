@@ -15,6 +15,7 @@ import PrivacyPolicy from "../Components/PrivacyPolicy";
 import ForgetPassword from "../Components/ForgetPassword";
 import AuthChecker from "../context/AuthChecker";
 import Support from "../Components/Support ";
+import MyOrders from "../Components/MyOrders";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
       {
         path: "/contacts",
         element: <Contacts></Contacts>,
+      },
+      {
+        path: "/my-orders",
+        element: <MyOrders></MyOrders>,
       },
       { path: "/privacy-policy", Component: PrivacyPolicy },
       { path: "/term-and-conditions", Component: TermsAndConditions },

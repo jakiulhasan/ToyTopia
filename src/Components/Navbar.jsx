@@ -218,6 +218,11 @@ const Navbar = () => {
                     </div>
                   </Link>
                 </li>
+                <li>
+                  <Link to="/my-orders">
+                    <h2>My Orders</h2>
+                  </Link>
+                </li>
                 <li onClick={signOut}>
                   <button>
                     <a>Log Out</a>
