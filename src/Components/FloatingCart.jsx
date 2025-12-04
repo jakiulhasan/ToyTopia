@@ -4,6 +4,7 @@ import api from "../axios/api";
 import { AuthContext } from "../context/AuthContext";
 import Loading from "./Loading";
 import { FaRegTrashAlt } from "react-icons/fa";
+import Swal from "sweetalert2";
 
 const FloatingCart = () => {
   const { user } = useContext(AuthContext);
@@ -11,6 +12,7 @@ const FloatingCart = () => {
   const [myCart, setMyCart] = useState([]);
   const [toysData, setToysData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [processing, setProcessing] = useState(false);
 
   const loadMyCart = async () => {
     try {
@@ -54,6 +56,57 @@ const FloatingCart = () => {
 
   const itemCount = cartItems.length;
   const displayCount = itemCount > 99 ? "99+" : itemCount;
+
+  // Calculate total price
+  const totalPrice = cartItems.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0
+  );
+
+  // Handle complete order
+  const handleCompleteOrder = async () => {
+    if (cartItems.length === 0) return;
+    setProcessing(true);
+
+    try {
+      // Fake payment delay
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+
+      // Prepare order data
+      const orderData = {
+        email: user.email,
+        items: cartItems,
+        totalAmount: totalPrice,
+        date: new Date(),
+        paymentStatus: "completed",
+      };
+
+      // Send order to server
+      const { data } = await api.post("/orders", orderData);
+
+      await api.delete("/delete-cart", {
+        params: { email: user.email },
+      });
+
+      if (data.success) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Payment Successful! Order ID: " + data.orderId,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        // Clear local cart
+        setMyCart([]);
+      }
+    } catch (error) {
+      console.log(error);
+      alert("Payment failed!");
+    } finally {
+      setProcessing(false);
+      setOpen(false);
+    }
+  };
 
   return (
     <>
@@ -136,11 +189,18 @@ const FloatingCart = () => {
           ))}
         </div>
 
-        {/* Complete Order Button */}
+        {/* Total & Complete Order Button */}
         {cartItems.length > 0 && (
-          <button className="w-full bg-indigo-600 mt-4 text-white py-2 rounded-lg hover:bg-indigo-700">
-            Complete Order
-          </button>
+          <div className="mt-4">
+            <p className="font-bold mb-2">Total: ${totalPrice.toFixed(2)}</p>
+            <button
+              onClick={handleCompleteOrder}
+              disabled={processing}
+              className="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700"
+            >
+              {processing ? "Processing..." : "Complete Order"}
+            </button>
+          </div>
         )}
       </div>
     </>
