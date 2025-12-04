@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet-async";
 
 const About = () => {
   return (
-    <div className="w-11/12 mx-auto py-10 text-center">
+    <div className="max-w-7xl mx-auto py-10 text-center">
       <Helmet>
         <title>About</title>
       </Helmet>

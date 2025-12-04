@@ -214,12 +214,10 @@ const Navbar = () => {
                     </div>
                   </Link>
                 </li>
-                <li>
-                  <Link>
-                    <button className="" onClick={signOut}>
-                      <a>Log Out</a>
-                    </button>
-                  </Link>
+                <li onClick={signOut}>
+                  <button>
+                    <a>Log Out</a>
+                  </button>
                 </li>
               </ul>
             </div>

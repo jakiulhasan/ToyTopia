@@ -64,12 +64,6 @@ const AllToys = () => {
               ))}
             </div>
 
-            {/* Grid Icons */}
-            <div className="flex text-gray-400 text-xl gap-3">
-              <BsGrid className="cursor-pointer hover:text-primary" />
-              <BsGrid3X3Gap className="cursor-pointer hover:text-primary" />
-            </div>
-
             {/* Sorting */}
             <div className="relative">
               <select
@@ -89,7 +83,7 @@ const AllToys = () => {
       </div>
 
       {/* TOYS GRID */}
-      <div className="max-w-7xl mx-auto grid md:grid-cols-4 gap-5 my-10 p-4">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 my-10 p-4 sm:p-0">
         {processedToys.map((toy) => (
           <ToysCard key={toy.toyId} popularToy={toy} />
         ))}

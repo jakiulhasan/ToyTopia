@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet-async";
 
 const PrivacyPolicy = () => {
   return (
-    <div className="w-11/12 mx-auto py-10">
+    <div className="max-w-7xl mx-auto py-10">
       <Helmet>
         <title>Privacy Policy</title>
       </Helmet>

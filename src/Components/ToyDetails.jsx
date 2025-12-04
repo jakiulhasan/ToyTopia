@@ -22,7 +22,7 @@ const ToyDetails = ({ toy }) => {
   };
 
   return (
-    <div className="w-11/12 mx-auto my-10">
+    <div className="max-w-7xl mx-auto my-10">
       <div className="flex flex-col lg:flex-row items-center lg:items-start gap-10">
         <img
           src={pictureURL}

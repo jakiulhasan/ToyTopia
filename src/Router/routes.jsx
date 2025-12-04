@@ -14,6 +14,7 @@ import TermsAndConditions from "../Components/TermandConditions";
 import PrivacyPolicy from "../Components/PrivacyPolicy";
 import ForgetPassword from "../Components/ForgetPassword";
 import AuthChecker from "../context/AuthChecker";
+import Support from "../Components/Support ";
 
 const router = createBrowserRouter([
   {
@@ -37,7 +38,7 @@ const router = createBrowserRouter([
       { path: "/privacy-policy", Component: PrivacyPolicy },
       { path: "/term-and-conditions", Component: TermsAndConditions },
       { path: "/about", Component: About },
-      { path: "/support", Component: About },
+      { path: "/support", Component: Support },
       { path: "/forgot-password", Component: ForgetPassword },
       {
         path: "/login",
@@ -61,11 +62,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/toys/:id",
-        element: (
-          <PrivateRoute>
-            <ToysDetails> </ToysDetails>
-          </PrivateRoute>
-        ),
+        element: <ToysDetails> </ToysDetails>,
         loader: () => fetch("/toysDetails.json"),
       },
     ],

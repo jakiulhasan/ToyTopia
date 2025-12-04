@@ -143,7 +143,7 @@ const Register = () => {
                 <button
                   type="submit"
                   disabled={allCheck}
-                  className="btn btn-neutral mt-4"
+                  className="btn btn-primary mt-4"
                 >
                   Register
                 </button>

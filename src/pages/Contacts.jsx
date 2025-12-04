@@ -21,7 +21,7 @@ const Contacts = () => {
   };
 
   return (
-    <div className="w-11/12 mx-auto py-10 text-center">
+    <div className="max-w-7xl mx-auto py-10 text-center">
       <Helmet>
         <title>Contacts</title>
       </Helmet>
