@@ -1,19 +1,32 @@
 import React, { useEffect, useState } from "react";
-import { useLoaderData, useParams } from "react-router";
+import { useParams } from "react-router";
 import ToyDetails from "../Components/ToyDetails";
 import { Helmet } from "react-helmet-async";
+import Loading from "../Components/Loading";
+import api from "../axios/api";
 
 const ToysDetails = () => {
   const { id } = useParams();
-  const toysData = useLoaderData();
-
-
+  const [loading, setLoading] = useState([]);
   const [toy, setToy] = useState({});
 
   useEffect(() => {
-    const toyData = toysData.find((toyData) => toyData.toyId == id);
-    setToy(toyData);
-  }, [id, toysData]);
+    const loadToys = async () => {
+      try {
+        const response = await api.get("/toys");
+        const toyData = response.data.find((toyData) => toyData.toyId == id);
+        setToy(toyData);
+        setLoading(false);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    loadToys();
+  }, [id]);
+
+  if (loading) {
+    return <Loading></Loading>;
+  }
 
   return (
     <div>

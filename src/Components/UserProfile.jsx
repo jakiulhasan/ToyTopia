@@ -21,7 +21,7 @@ const UserProfile = () => {
         document.getElementById("my_modal_2").close();
       })
       .catch((error) => {
-        toast.error("Failed to update profile");
+        toast.error("Failed to update profile", error);
       });
   };
 
@@ -30,7 +30,7 @@ const UserProfile = () => {
   }
 
   return (
-    <div className="mx-auto max-w-7xl max-w-4xl py-10">
+    <div className="mx-auto max-w-4xl py-10">
       <Helmet>
         <title>User Profile</title>
       </Helmet>
