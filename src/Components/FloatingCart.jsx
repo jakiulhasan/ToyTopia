@@ -31,9 +31,12 @@ const FloatingCart = () => {
     }
   };
 
-  const handleRemove = async (toyId) => {
+  const handleRemove = async (toyId, toyEmail) => {
     try {
-      await api.delete(`/my-cart/${toyId}`);
+      await api.delete(`/my-cart/${toyId}`, {
+        params: { email: toyEmail },
+      });
+
       setMyCart((prev) => prev.filter((item) => item.toyId !== toyId));
     } catch (error) {
       console.log(error);
@@ -180,7 +183,7 @@ const FloatingCart = () => {
               </div>
 
               <button
-                onClick={() => handleRemove(item.toyId)}
+                onClick={() => handleRemove(item.toyId, item.email)}
                 className="text-red-500 hover:text-red-700 text-sm"
               >
                 <FaRegTrashAlt />
